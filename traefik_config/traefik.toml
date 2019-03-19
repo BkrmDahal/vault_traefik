@@ -1,0 +1,36 @@
+debug = true
+logLevel = "ERROR"
+
+defaultEntryPoints = ["http", "https"]
+
+[web]
+# Port for the status/dashboard page
+  dashboard = true
+  address = ":8080"
+  usersFile = "/root/docker/shared/.htpasswd"
+
+[entryPoints]
+    [entryPoints.http]
+    address = ":80"
+        [entryPoints.http.redirect]
+        entryPoint = "https"
+
+    [entryPoints.https]
+    address = ":443"
+    [entryPoints.https.tls]
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "rpy3.com"
+watch = true
+exposedByDefault = false
+
+[acme]
+email = "example@gmail.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+    [acme.httpChallenge]
+    entryPoint = "http"
