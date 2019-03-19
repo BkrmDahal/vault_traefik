@@ -48,5 +48,5 @@ vault auth -address=${VAULT_ADDR} ${VAULT_TOKEN}
 volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 ```
-![This is high security risk](https://stackoverflow.com/questions/40844197/what-is-the-docker-security-risk-of-var-run-docker-sock). Looks at the recommanded method of duplicating docker sock or changing user access on docker. 
+[This is high security risk](https://stackoverflow.com/questions/40844197/what-is-the-docker-security-risk-of-var-run-docker-sock), research the recommanded method of duplicating docker sock or changing user access on docker. 
 

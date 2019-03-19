@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik_config/traefik.toml:/traefik.toml
+      - ./traefik_config/acme.json:/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=proxy"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:traefik.rpy3.com"
+      - "traefik.port=8080"
+    networks:
+      - web
+
+  vault:
+    image: vault
+    restart: always
+    ports:
+      - 8200:8200
+    volumes:
+      - ./config/:/config/
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=api"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:vault.rpy3.com"
+      - "traefik.port=8200"
+    networks:
+      - web
+    cap_add:
+      - IPC_LOCK
+    command: ["vault", "server" ,"-config=/config/config.json" ]
+
+networks:
+  web:
+    external: true
