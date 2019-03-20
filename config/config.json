@@ -7,8 +7,10 @@
 		}
 	}],
 	"storage" :{
-		"file" : {
-			"path" : "/vault/data"
+		"s3" : {
+			"access_key" : "xxxxxx",
+            		"secret_key" : "xxxxxxxxx",
+            		"bucket": "bucket"
 		}
 	},
 	"max_lease_ttl": "10h",
