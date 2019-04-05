@@ -22,24 +22,21 @@ services:
       - web
 
   vault:
-    image: vault
+    image: codercom/code-server
     restart: always
     ports:
-      - 8200:8200
+      - 8443:8443
     volumes:
-      - ./config/:/config/
+      - ./:/home/coder/project
     labels:
       - "traefik.enable=true"
       - "traefik.backend=api"
       - "traefik.docker.network=web"
-      - "traefik.frontend.rule=Host:vault.rpy3.com"
-      - "traefik.port=8200"
+      - "traefik.frontend.rule=Host:vscode.rpy3.com"
+      - "traefik.port=8443"
     networks:
       - web
-    cap_add:
-      - IPC_LOCK
-    command: ["vault", "server" ,"-config=/config/config.json" ]
-
+    command: ['--allow-http']
 networks:
   web:
     external: true
